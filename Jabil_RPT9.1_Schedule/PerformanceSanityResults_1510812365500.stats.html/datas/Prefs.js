@@ -1,0 +1,1 @@
+﻿define(["dojo/_base/declare"], function(declare){return declare(null, {constructor: function () {},data : function () {return {"type":"Preferences","productId":"com.ibm.rational.rpt.product.ide","productName":"Rational Performance Tester","fixedColumn":false,"percentiles":["85","90","95"]};}});});

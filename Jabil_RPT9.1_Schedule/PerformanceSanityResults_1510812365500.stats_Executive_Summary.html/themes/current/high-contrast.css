@@ -1,0 +1,72 @@
+.use-high-contrast .menu li a {
+  border: 1px solid;
+}
+.use-high-contrast #main_menu .btn:focus {
+  outline: 1px solid;
+}
+.use-high-contrast #main_menu_panel {
+  border: 1px solid;
+}
+.use-high-contrast .dropdown-listview {
+  border: 1px solid;
+}
+.use-high-contrast #main_menu_button {
+  border: 1px solid;
+}
+.use-high-contrast #main_menu_button span {
+  border: 1px solid;
+  height: 0px;
+}
+.use-high-contrast button,
+.use-high-contrast .ui-icon,
+.use-high-contrast .icon {
+  border: 1px solid;
+}
+.use-high-contrast #page_selector.reduced #page_selector_reduced_panel {
+  border: 1px solid;
+}
+.use-high-contrast #main_menu .icon {
+  border: 0px;
+}
+.use-high-contrast .search-line {
+  border: 1px solid;
+}
+.use-high-contrast .ui-button-text {
+  border: 1px solid;
+}
+.use-high-contrast .gradient-tooltip > rect {
+  stroke-width: 1;
+  stroke: windowtext;
+  fill: background;
+}
+.use-high-contrast .gradient-tooltip > text {
+  fill: windowtext;
+  stroke-width: 0;
+}
+.use-high-contrast .toolbar .label {
+  display: block;
+  font-size: xx-small;
+}
+.use-high-contrast .toolbar .ui-icon {
+  display: none;
+}
+.use-high-contrast .toolbar li a {
+  border: 1px solid;
+}
+.use-high-contrast .toolbar li {
+  margin-right: 5px;
+}
+.use-high-contrast .mini-bar .bar {
+  fill: none;
+}
+.use-high-contrast .mini-bar text {
+  fill: WindowText;
+}
+.use-high-contrast .ytext rect {
+  fill: Window;
+  opacity: 1;
+  stroke: windowText;
+}
+.use-high-contrast .ytext text {
+  fill: WindowText;
+}

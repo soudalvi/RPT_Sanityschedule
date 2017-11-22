@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- 
+ * ***************************************************************
+ * Licensed Materials - Property of IBM
+ * (c)  Copyright IBM Corporation 2015. All Rights Reserved.
+ * U.S. Government Users Restricted Rights - Use, duplication or disclosure
+ * restricted by GSA ADP Schedule Contract with IBM Corp. 
+ * *************************************************************** 
+ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0; url=unsupported_ie.html" />
+<![endif]-->
+
+<link rel="shortcut icon" href="images/execution_report.ico" />
+
+<!--  css -->
+<link rel="stylesheet" href="libs/jquery-ui-1.11.3/jquery-ui.css" /> 
+<link rel="stylesheet" href="themes/current/color-theme.css" />
+<link rel="stylesheet" href="themes/current/high-contrast.css" />
+
+<!-- JavaScript -->
+<script>window._forceofflinemode=true;</script>
+<script>
+    dojoConfig= {
+	        has: {
+	            "dojo-firebug": true,
+	            "native-xhr2-blob": true
+	        },
+	        isDebug: true,
+	        parseOnLoad: false,
+	        async: true,
+	        baseUrl: "./js/",
+	          
+			//here are the packages dojo will be aware of and related js files
+			packages: [
+				//dojo specific packages
+				{name: "dojo", location: "../libs/dojo"},
+				{name: "jquery", location: "../libs/jquery", main: "jquery-2.1.4"},     
+				{name: "jqueryui", location: "../libs/jquery-ui-1.11.3", main: "jquery-ui"},        
+				{name: "ckeditor", location: "../libs/ckeditor", main: "ckeditor"}, 
+				{name: "ckeditor_adapter", location: "../libs/ckeditor/adapters", main: "jquery"}, 
+				{name: "d3", location: "../libs/d3"},
+				{name: "js", location: "./"},
+				{name: "jrptlib", location: "./jrptlib"},
+				{name: "model", location: "./model"},
+				{name: "view", location: "./view"},
+				{name: "ui", location: "./ui"},
+				{name: "edit", location: "./edit"},
+				{name: "share", location: "./share"},
+				{name: "search", location: "./search"},
+            ]
+	        
+    };
+</script>
+
+
+
+<script src="libs/d3/d3.js"></script>
+<script src="libs/dojo/dojo.js"></script>
+<script id="i18n" type="text/javascript" src="js/jrptlib/i18n.js" page="index.html"></script>
+<script type="text/javascript" src="libs/jquery/consolefix.js"></script>
+<script src="js/ui/main.js"></script>
+
+<title></title>
+
+</head>
+
+<body>
+
+   <div class="application" style="display:none">
+   
+		<header>	
+           <div id="app_header" class="header-bar ui-front" role="banner">
+			<ul class="top-bar horizontal-bar clearfix" role="navigation" aria-labelledby="navheading">
+				<!--  li id="product_banner">
+				    <div id="logo"></div>
+					<span id="product_name">%Application_name</span>
+				</li>-->
+				
+				<li id="main_menu_item">
+				   <a role="button" class="btn" id="main_menu_button" href="javascript:void(0)">
+				       <span></span><span></span><span></span>%Menu_label</a>
+				</li>			
+				<li id="session_name"></li>		
+				<li id="exec_actions_list"></li>			
+				<li id="report_list" class="dropdown-list">%Select_report_label</li>
+				<li id="timerange_list" class="dropdown-list">%RunTimeRange</li>
+				<li id="agent_list" class="dropdown-list">%RunAgent</li>
+				<li id="search_bar" role="search" class="ui-widget">
+				    <a href="javascript:void(0);" role="button" class="btn search-button" id="search_button" title="%Search_label"><img src="images/search24.png" alt="%Search_label"></a>
+				    <div id="search_line" class="search-line" style="display:none" ></div>
+			    </li>			    
+			</ul>
+					
+			<div id="main_menu_panel" role="navigation" aria-labelledby="navmainmenuheading">
+				<nav id="main_menu">
+					<ul class="menu">				
+						<li><a id="session"><div class="icon"><img src="images/session_48_48.png" alt="%Session_label"></div>
+						    <div class="label">%Session_label</div></a></li>
+						    
+					    <li><a id="create_report_menuitem"><div class="icon"><img src="images/create_report.png" alt="%NewReport_label"></div>
+						    <div class="label">%NewReport_label</div></a></li>
+						
+						<li><a id="edit" toggable="true"><div class="icon"><img src="images/edit.png" alt="%Edit_label"></div>
+						    <div class="label">%Edit_label</div></a>
+						
+						    <ul>
+						        <li><a id="save"><div class="icon"><img src="images/save.png" alt="%Save_label"></div>
+						              <div class="label">%Save_label</div></a></li>
+						    
+						        <li><a id="save_as"><div class="icon"><img src="images/save.png" alt="%SaveAs_label"></div>
+						            <div class="label">%SaveAs_label</div></a></li>
+						       
+						    </ul>    
+						    
+					    </li>
+						    
+						<li><a id="share"><div class="icon"><img src="images/share.png"></div>
+						    <div class="label">%Share_label</div></a>
+						</li>
+						    
+						<li><a id="help" href="javascript: void(0);"><div class="icon"><img src="images/help.png"></div>
+						    <div class="label">%Help_label</div></a></li>
+						 
+					</ul>
+				</nav>
+			  </div>
+			
+				
+			</div>
+		
+				
+		</header>
+		
+		 
+		
+		<section id="content" class="welcome" role="content">
+			
+			   <div id="page_selector" style="display: none">
+			      <header class="ui-widget-header">%Pages<button class="btn reduce-control page_selector_size_button ui-button ui-widget ui-corner-all ui-button-icon-only" title="%Collapse_Action"><span class="ui-icon ui-icon-carat-1-w"></span></button>
+			      </header>
+  			          
+  			      <div class="page_selector_scrollview"></div> 
+			      
+			      <a id="page_selector_reduced_panel" 
+			      class="reduce-control reduced_panel ui-front ui-label ui-widget-header" 
+			      href="javascript: void(0)">%Pages</a>
+		      
+			   </div>
+			
+			<div id="pages_container"></div>
+			
+			
+			<div id="welcome_text" class="welcome-text">
+				<h1>%Application_title</h1>
+				<span>%Tag_line</span>
+				<h2></h2>
+				<button id="open_session">%OpenSession_button_label</button>
+			</div>
+
+		</section>
+		
+		<section id="view_edit_panel" class="ui-front" style="display: none" role="complementary">
+		    
+		    <header class="view_edit_header" role="navigation" aria-labelledby="settingsnavheading">
+		       <button tabindex="3" class="btn ui-button ui-widget ui-corner-all cancel-button">%Cancel_label</button>
+		       <button tabindex="2" class="btn ui-button ui-widget ui-corner-all apply-button">%Apply_label</button>
+		       <span class="view_edit_toolbar_separator"></span>
+		       <button tabindex="1" class="btn ui-button ui-widget ui-corner-all help-button">%Help_label</button>
+		       %View_Settings_Panel
+		    </header>
+		    
+		    <section class="clearfix">
+		       <div class="view_preview_panel panel">
+		           <h2>%ViewPreview_label</h2>
+		           <div class="view_preview"></div>
+		       </div>
+		       <div class="view_options_panel panel">
+		           <h2>%ViewOptions_label</h2>
+		           <div class="view_options"></div>
+		       </div>
+		    </section>
+		    
+		    <section class="clearfix">
+		       
+		       <div class="counter_list_panel panel">
+		          <h2>%CounterList_label</h2>
+		          <div class="counter_list"></div>
+		       </div>
+		       <div class="counter_options_panel_arrow"></div>
+		       <div class="counter_options_panel panel">
+		          <h2>%CounterOptions_label</h2>
+		          <div class="counter_options"></div>
+		          <div class="empty_counter_options">%EmptyCounterOptions_label</div>
+		       </div>
+		    </section>
+		
+		    <section class="clearfix" id="filters_container"></section>
+		</section>
+
+
+	</div>  <!-- application -->
+
+    <div id="loading_banner" class="loading-banner"></div>
+     
+     
+    <div id="report_desc" style="display: none"></div>
+    
+    <!-- event view for the application -->
+    <div id="event_view" class="ui-front" style="display: none">
+        <div class="icon"></div>
+    
+    </div>
+    
+    
+    
+    
+    <!-- design of Session selector dialog -->
+    <div id="session_dialog" title="%Session_dialog_title" style="display: none">
+ 
+       <section id="session_browser">
+          <h1>title</h1>
+          <ul></ul>
+       </section>
+          
+    </div>
+    
+    
+    <div id="delete_view_dialog_confirm" title="%DeleteView_dialog_title" style="display: none">
+      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        %DeleteView_dialog_message</p>
+    </div>
+    
+    <div id="delete_page_dialog_confirm" title="%DeletePage_dialog_title" style="display: none">
+      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        %DeletePage_dialog_message</p>
+    </div>
+    
+    <div id="app_dialog_confirm" title="%Application_title" style="display: none">
+      <p >
+           <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+           <span class="ui-dialog-message"></span>
+        </p>
+    </div>
+    
+    
+    <div id="progress_dialog" title="" style="display: none">
+       <div class="progress-label"></div>
+       <div id="progress_dialog_progressbar"></div>
+    </div>
+
+	<div id="app_input_dialog" title="%Application_title" class="form-dialog" style="display: none">
+		<p class="ui-dialog-message"></p>
+
+		<form>
+
+			<label class="input-label" for="name">%AppInputDialog_Name</label> 
+			<input class="input-field" type="text" name="name" id="name" value="" />
+
+		</form>
+	</div>
+	
+	
+	<div id="new_report_dialog" class="form-dialog" title="%Application_title" style="display: none">
+		<p class="ui-dialog-message"></p>
+
+		<form>
+            <fieldset>
+			  <label class="input-label" for="new_report_name">%NewReportDialog_Name</label> 
+			  <input type="text" name="new_report_name" id="new_report_name" value="" />
+				
+			  <label class="input-label" for="new_report_desc">%NewReportDialog_Desc</label> 
+			  <textarea type="text" name="new_report_desc" id="new_report_desc" value=""></textarea>
+				
+			</fieldset>
+
+		</form>
+	</div>
+	
+	
+	<div id="time_range_dialog" class="form-dialog" title="%TimeRangeDialog_title" style="display: none">
+		<p class="ui-dialog-message">%TimeRangeDialog_Message</p>
+
+        <p>%TimeRangeDialog_TimeRangeList_label</p>
+        <div class="timerange-list"></div>
+
+		<form>
+            <fieldset>
+            <legend>%TimeRangeDialog_AttributLabel</legend>
+			  <label for="timerange_name">%TimeRangeDialog_Name</label> 
+			  <input type="text" name="timerange_name" id="timerange_name" value="" />
+			  
+			  <label for="timerange_starttime">%TimeRangeDialog_StartTime</label> 
+			  <input type="text" name="timerange_starttime" id="timerange_starttime" value="" />
+			  
+			  <label for="timerange_endtime">%TimeRangeDialog_EndTime</label> 
+			  <input type="text" name="timerange_endtime" id="timerange_endtime" value="" />
+			  
+			  <p>%TimeRangeDialog_EndTime_HelpText</p>	
+			  	
+			</fieldset>
+			
+			<input type="checkbox" name="absolute_time" id="absolute_time" />
+			<label for="absolute_time">%TimeRangeDialog_ShowAbsoluteTime</label>
+
+		</form>
+	</div>
+	
+	<div id="session_set_dialog" class="form-dialog" title="%SessionSetDialog_title" style="display: none">
+		<p class="ui-dialog-message">%SessionSetDialog_Message</p>
+
+        <p>%SessionSetDialog_SessionList_label</p>
+        <div class="session-list"></div>
+	</div>	
+	
+	<div id="report_manager_dialog" class="form-dialog" title="%Application_title" style="display: none">
+		<p class="ui-dialog-message"></p>
+
+        <!--  <p>%Application_title</p>  -->
+        <div class="report-list"></div>
+        
+        <div class="button-column">
+            <button id="report_manager_dialog_default_button"></button>
+            <button id="report_manager_dialog_delete_button"></button>
+        </div>
+	</div>	
+	
+	
+	<div id="share_dialog" title="%ShareDialog_title" style="display: none">
+	   <ul class="share-plugin-list"></ul>
+	</div>
+	
+	
+    <!-- design a global error message dialog for the application -->
+    <div id="error_dialog" title="%Error_dialog_title" style="display: none" ></div>
+
+    <!-- design a dialog for stop test run action -->
+	<div id="exec_stop_dialog" title="%Exec_stop_dialog_title" style="display: none">
+		<p>%Exec_stop_dialog_message</p>
+		<form>	
+			<fieldset>
+				<legend>%Exec_stop_dialog_options</legend>
+				<div class="horizontal_aligned">
+					<label for="timeout_option">%Exec_stop_timeout_option</label>
+					<input type="text" id="timeout_option" value="30"/>
+					<select id="stop_test_unity">
+						<option value="milli">%Time_milliseconds_option</option>
+						<option value="sec" selected="selected">%Time_seconds_option</option>
+						<option value="min">%Time_minutes_option</option>
+						<option value="hour">%Time_hours_option</option>
+					</select>
+				</div>
+				<div class="horizontal_aligned">
+					<input id="collect_info" type="checkbox" name="collect_info" checked="true"/>
+					<label for="collect_info">%Exec_stop_collect_option</label>
+				</div>
+				<div class="horizontal_aligned">
+					<input id="finally" type="checkbox" name="finally" checked="true"/>
+					<label for="finally">%Exec_stop_finally_option</label>
+				</div>
+			</fieldset>
+			
+		</form>
+	</div>
+
+    <!-- design a dialog for change virtual users number action -->
+	<div id="exec_change_users_dialog" title="%Exec_change_users_dialog_title" style="display: none">
+		<form>
+			<fieldset>
+					<legend>%Exec_change_users_dialog_message</legend>
+					<div class="horizontal_aligned">
+						<input id="add_users" type="radio" name="add_remove_users" value="add" checked="checked" />
+						<label for="add_users">%Exec_change_users_add_option</label>
+						<input type="text" id="add_users_text" />
+					</div>
+					<div class="horizontal_aligned">
+						<input id="remove_users" type="radio" name="add_remove_users" value="remove"/>
+						<label for="remove_users">%Exec_change_users_remove_option</label>
+						<input type="text" id="remove_users_text" style="display: none"/>
+					</div>
+					<div class="horizontal_aligned">
+						<input id="apply" type="checkbox" name="finally"/>
+						<label for="apply">%Exec_change_users_apply_option</label>
+					</div>
+				</fieldset>
+		</form>
+	</div>
+
+    <!-- design a dialog for change log level action -->
+	<div id="exec_change_log_dialog" title="%Exec_change_log_dialog_title" style="display: none">
+		<form>
+			<fieldset>
+					<legend>%Exec_change_log_dialog_message</legend>
+					<div class="horizontal_aligned">
+						<label>%Exec_change_log_level_option</label>
+						<select id="change_log_value">
+							<option value="all">%Exec_change_log_all_option</option>
+							<option value="finest">%Exec_change_log_finest_option</option>
+							<option value="finer">%Exec_change_log_finer_option</option>
+							<option value="fine">%Exec_change_log_fine_option</option>
+							<option value="config">%Exec_change_log_config_option</option>
+							<option value="info">%Exec_change_log_info_option</option>
+							<option value="warning" selected="selected">%Exec_change_log_warning_option</option>
+							<option value="severe">%Exec_change_log_severe_option</option>
+							<option value="none">%Exec_change_log_none_option</option>
+						</select>
+					</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<!-- design a dialog for change stage duration action -->
+	<div id="exec_change_stage_dialog" class="form-dialog" title="%Exec_change_stage_dialog_title" style="display: none">
+		<p class="ui-dialog-message">%Exec_change_stage_dialog_message</p>
+
+		<form>
+			<fieldset>
+					<!-- <legend>%Exec_change_stage_dialog_message</legend> -->
+					<div class="horizontal_aligned">
+						<label>%Exec_change_stage_duration_label</label>
+						<label id="exec_stage_duration_value"></label>
+					</div>
+					<div class="horizontal_aligned">
+						<label>%Exec_change_stage_timeleft_label</label>
+						<label id="exec_stage_timeleft_value"></label>
+					</div>
+					<div class="horizontal_aligned">
+						<label>%Exec_change_stage_new_duration_label</label>
+						<input type="text" name="stage_duration" id="new_duration_option" />
+						<select id="new_duration_unity" name="stage_duration_unity">
+							<option value="sec">%Time_seconds_option</option>
+							<option value="min" selected="selected">%Time_minutes_option</option>
+							<option value="hour">%Time_hours_option</option>
+							<option value="day">%Time_days_option</option>
+						</select>					
+					</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<!-- design a dialog for change stage duration action -->
+	<div id="exec_manage_sync_dialog" class="form-dialog" title="%Exec_manage_sync_dialog_title" style="display: none">
+		<p class="ui-dialog-message">%Exec_manage_sync_dialog_message</p>
+		<form>
+			<table id="sync_points_table">
+				<tr>
+					<th class="checkbox"></th>
+					<th>%manage_sync_name_col</th>
+					<th>%manage_sync_state_col</th>
+					<th>%manage_sync_arrived_col</th>
+					<th>%manage_sync_expected_col</th>
+					<th>%manage_sync_duration_col</th>
+					<th>%manage_sync_timeout_col</th>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- drill down popup menu -->
+	<nav id="context-menu" class="context-menu">
+			<ul class="context-menu__items">
+			</ul>
+	</nav>
+</body>
+</html>
